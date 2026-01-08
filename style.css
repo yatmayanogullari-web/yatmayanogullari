@@ -1,0 +1,83 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Georgia', serif;
+}
+
+.background {
+  min-height: 100vh;
+  background: #3b2f2f;
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.ferman {
+  background: #f5e6c8;
+  width: 90%;
+  max-width: 800px;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.4);
+  overflow: hidden;
+  animation: rollDown 1.6s ease-out forwards;
+}
+
+@keyframes rollDown {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 2000px; opacity: 1; }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tugra {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 42px;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255,255,255,0.6);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+}
+
+.icon {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.content h2 {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  opacity: 0.7;
+}
