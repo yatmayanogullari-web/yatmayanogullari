@@ -14,6 +14,8 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-color: rgba(0,0,0,0.25);
+background-blend-mode: multiply;
 
   display: flex;
   justify-content: center;
@@ -78,29 +80,37 @@ body {
 h1 {
   font-size: 42px;
 }
-
 .card {
   display: flex;
   align-items: center;
-  gap: 20px;
-  background: rgba(255,255,255,0.6);
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
+  gap: 18px;
+
+  padding: 18px 20px;
+  margin: 16px auto;
+
+  max-width: 720px;
+
+  border-radius: 14px;
   text-decoration: none;
-  color: #000;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: #1b1410;
+
+  background: rgba(255, 248, 234, 0.72);
+  border: 1px solid rgba(70, 45, 22, 0.18);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+
+  backdrop-filter: blur(3px);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+  box-shadow: 0 16px 28px rgba(0,0,0,0.24);
 }
 
 .icon {
-  font-size: 48px;
+  font-size: clamp(34px, 3.5vw, 54px);
   flex-shrink: 0;
+  opacity: 0.95;
 }
 
 .content h2 {
@@ -113,4 +123,12 @@ footer {
   margin-top: 40px;
   font-size: 14px;
   opacity: 0.7;
+}
+@media (max-width: 700px) {
+  .ferman-content {
+    padding: 150px 22px 120px;
+  }
+  .card {
+    margin: 14px 10px;
+  }
 }
