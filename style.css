@@ -14,7 +14,17 @@ body::before{
   content:"";
   position: fixed;
   inset: 0;
-  background: url("assets/textures/wall.png") center / cover no-repeat;
+
+  /* BOYUT / POZİSYON AYARLARI */
+  background-image: url("assets/textures/wall.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+
+  /* performans / titreme azaltma */
+  transform: translateZ(0);
+  will-change: transform;
+
   z-index: -2;
 }
 body::after{
@@ -54,9 +64,13 @@ body::after{
   position:absolute;
   inset:0;
 
-  background: url("assets/textures/parchment.png") center / contain no-repeat;
+  /* GÖRSEL BOYUT/POZİSYON */
+  background-image: url("assets/textures/parchment.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 
-  /* 1.35 aşırıydı -> dengeli büyütme */
+  /* dengeli büyütme */
   transform: scale(1.22);
   transform-origin: center;
 
@@ -65,7 +79,7 @@ body::after{
   z-index: 0;
 }
 
-/* İÇERİK: ORTALAMA BURADA (sende sorun buradaydı) */
+/* İÇERİK: ORTALAMA BURADA */
 .ferman-content{
   position: relative;
   z-index: 1;
@@ -77,7 +91,7 @@ body::after{
 
   /* kartın sağ/sol boşluğu buradan ayarlanır */
   width: min(820px, 74vw);
-  margin: 0 auto; /* <-- SOLA KAYMA BURADA BİTİYOR */
+  margin: 0 auto;
 
   padding-top: clamp(190px, 22vh, 270px);
   padding-bottom: clamp(130px, 16vh, 210px);
@@ -93,7 +107,7 @@ body::after{
 .tugra{ font-size: clamp(26px, 3vw, 42px); margin-bottom: 8px; opacity: .95; }
 h1{ font-size: clamp(34px, 4.2vw, 58px); letter-spacing: .2px; }
 
-/* KART: içerik alanının %100’ü -> yanlarda boşluk kalır */
+/* KART */
 .card{
   width: 100%;
   display:flex;
@@ -119,11 +133,22 @@ h1{ font-size: clamp(34px, 4.2vw, 58px); letter-spacing: .2px; }
   box-shadow: 0 16px 28px rgba(0,0,0,0.24);
 }
 
+/* İKON: EMOJI kullanıyorsan bu, URL ikon kullanacaksan aşağıdaki .icon-img devreye girer */
 .icon{ font-size: clamp(34px, 3.5vw, 54px); flex-shrink:0; opacity:.95; }
+
+/* URL'den görsel ikon kullanmak için */
+.icon-img{
+  width: clamp(40px, 4vw, 56px);
+  height: clamp(40px, 4vw, 56px);
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.95;
+}
+
 .content h2{ font-size: clamp(18px, 2.3vw, 26px); margin-bottom: 6px; }
 .content p{ font-size: clamp(13px, 1.6vw, 16px); opacity: .9; }
 
-/* FOOTER: fermanın içinde altta */
+/* FOOTER */
 footer{
   margin-top: auto;
   padding-top: 10px;
@@ -142,7 +167,7 @@ footer{
   }
 
   .ferman::before{
-    transform: scale(1.12); /* mobilde taşma azalsın */
+    transform: scale(1.12);
   }
 
   .ferman-content{
