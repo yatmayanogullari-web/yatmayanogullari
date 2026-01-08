@@ -21,22 +21,43 @@ body {
 }
 
 .ferman {
-  /* Ferman dokusu görseli */
-  background-image: url("assets/textures/parchment.png");
-  background-size: cover;
-  background-position: center;
+  width: min(1100px, 94vw);     /* büyüttük */
+  min-height: 760px;           /* ferman küçük kalmasın */
+  margin: 0 auto;
+  position: relative;
+
+  /* “kutu” gibi görünmesin */
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+
+  animation: rollDown 1.2s ease-out forwards;
+}
+
+/* Ferman görselini ayrı katman yapıyoruz (en kritik kısım) */
+.ferman::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("assets/textures/parchment.png"); /* senin ferman görselin */
+  background-size: contain;      /* cover değil! */
   background-repeat: no-repeat;
+  background-position: center top;
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,0.35));
+  pointer-events: none;
+  z-index: 0;
+}
 
-  /* (İstersen) dokuyu biraz “ferman” gibi göstermek için hafif ışık-gölge katmanı */
-  background-blend-mode: multiply;
+/* İçerik katmanı */
+.ferman-content {
+  position: relative;
+  z-index: 1;
 
-  width: 90%;
-  max-width: 800px;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 40px rgba(0,0,0,0.4);
-  overflow: hidden;
-  animation: rollDown 1.6s ease-out forwards;
+  /* İçeriği fermanın “boş yazı alanına” denk getirelim */
+  padding: 170px 90px 140px;    /* üst/yan/alt boşluk */
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 @keyframes rollDown {
