@@ -10,7 +10,11 @@ body {
 
 .background {
   min-height: 100vh;
-  background: #3b2f2f;
+  background-image: url("assets/textures/wall.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
   justify-content: center;
   padding: 40px 0;
