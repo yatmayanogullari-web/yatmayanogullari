@@ -29,8 +29,8 @@ body {
 
 /* FERMAN KATMANI (BÜYÜTÜLDÜ) */
 .ferman {
-  width: min(1280px, 96vw);
-  height: min(980px, 92vh);
+  width: min(1480px, 98vw);
+  height: min(1100px, 96vh);
   position: relative;
 
   background: transparent;
@@ -53,7 +53,7 @@ body {
   background-position: center;
 
   /* görseli ekstra büyüt */
-  transform: scale(1.25);
+  transform: scale(1.35);
   transform-origin: center;
 
   filter: drop-shadow(0 22px 34px rgba(0,0,0,0.42));
