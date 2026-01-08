@@ -21,7 +21,15 @@ body {
 }
 
 .ferman {
-  background: #f5e6c8;
+  /* Ferman dokusu görseli */
+  background-image: url("assets/textures/parchment.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* (İstersen) dokuyu biraz “ferman” gibi göstermek için hafif ışık-gölge katmanı */
+  background-blend-mode: multiply;
+
   width: 90%;
   max-width: 800px;
   padding: 40px 30px;
