@@ -1,13 +1,16 @@
-// Ferman açılış kontrolü
+// Ferman animasyonunu reload'da düzgün tetikle + (istersek) kart reveal
 document.addEventListener("DOMContentLoaded", () => {
   const ferman = document.getElementById("ferman");
-  if (!ferman) return;
 
-  // Yeniden yüklemede animasyonun düzgün çalışması için
-  ferman.style.animation = "none";
-  // reflow tetikle
-  void ferman.offsetHeight;
-  ferman.style.animation = "";
+  // Ferman giriş animasyonu reload'da takılmasın
+  if (ferman) {
+    ferman.style.animation = "none";
+    void ferman.offsetHeight; // reflow
+    ferman.style.animation = "";
+  }
+
+  // Kartları güvenli şekilde görünür yap (ne olursa olsun)
+  document.querySelectorAll(".reveal").forEach(el => {
+    el.classList.add("is-in");
+  });
 });
-
-// Gelecekte animasyon veya ek davranışlar buraya eklenebilir
