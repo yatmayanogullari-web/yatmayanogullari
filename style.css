@@ -264,12 +264,12 @@ footer{
 
   /* Parşömen: germe yok, cover ile uyumlu */
   .ferman::before{
-    /* senin üstteki background shorthand’ını burada override ediyoruz */
-    background-size: cover;
-    background-position: center;
+  /* zoom yok -> parşömen parşömen gibi kalır */
+  background-size: 100% 100%;
+  background-position: center;
 
-    /* mobilde enine aşırı genişletmeyi azalt */
-    transform: scaleX(1.04) scaleY(1.02);
+  /* mobilde çok az genişletme yeter, abartma yok */
+  transform: scaleX(1.02) scaleY(1.00);
   }
 
   /* İç alanı daralt -> kart taşmasın */
