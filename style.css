@@ -2,7 +2,15 @@
    RESET + GENEL
 ========================= */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
+
+/* 1) SAYFA KAYDIRMA KAPALI (PC + MOBİL)
+   - Sayfa aşağı/yukarı hareket etmez
+   - İleride çok kart eklersen sığmayabilir (istersen sonra iç scroll yaparız) */
+html, body{
+  height: 100%;
+  overflow: hidden;          /* scroll kapalı */
+  overscroll-behavior: none; /* mobilde "bounce" da kapalı */
+}
 
 :root{
   --max-ferman: 1560px;
@@ -13,12 +21,11 @@ html, body { height: 100%; }
 body{
   font-family: Georgia, serif;
   color: #1b1410;
-  overflow-x: hidden;
-  background: #1a1310; /* olası boşlukta beyaz değil koyu görünsün */
+  background: #1a1310;
 }
 
 /* =========================
-   ARKA PLAN: sabit + kaydırmada beyaz boşluk yok
+   ARKA PLAN (duvar)
 ========================= */
 body::before{
   content:"";
@@ -29,9 +36,6 @@ body::before{
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
-
-  transform: translateZ(0);
-  will-change: transform;
 
   z-index: -2;
 }
@@ -44,45 +48,45 @@ body::after{
 }
 
 /* =========================
-   SAYFA ORTALAYICI
+   SAYFA KAPSAYICI (ekran sabit)
 ========================= */
 .background{
-  min-height: 100svh;
+  height: 100svh;          /* ekran boyu */
+  width: 100vw;
+  overflow: hidden;        /* içerik taşarsa dışarı kaymasın */
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: clamp(16px, 4vh, 44px) 12px;
+  padding: 0;              /* mobilde kenara tam değsin diye */
 }
 
 /* =========================
-   FERMAN (RESPONSIVE)
-   - Artık sabit height yok -> içerik uzarsa büyür
+   FERMAN (ekrana sabit)
+   - Sayfa kaymıyor, ferman sabit duruyor
 ========================= */
 .ferman{
-  width: min(var(--max-ferman), 98vw);
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 
-  /* minimum “ferman dolu” hissi; ama içerik uzarsa büyür */
-  min-height: clamp(760px, 92vh, 1260px);
+  width: min(var(--max-ferman), 98vw);
+  height: 100svh;
 
   background: transparent;
-  box-shadow: none;
-  border-radius: 0;
-  overflow: visible;
-
-  animation: rollDown 1.05s ease-out forwards;
+  overflow: hidden; /* ferman dışına taşanlar görünmesin */
 }
 
-/* Ferman görseli (arka kâğıt) */
+/* Parşömen görseli */
 .ferman::before{
   content:"";
   position:absolute;
   inset:0;
 
-  /* içerik uzadıkça ferman uzar; görüntüyü de birlikte uzatır */
+  /* Parşömen her zaman fermanın içine yayılır */
   background: url("assets/textures/parchment.png") center / 100% 100% no-repeat;
 
-  /* enine genişlik + az dikey genişlik */
+  /* DESKTOP enine genişlik (parşömeni büyütür) */
   transform: scaleX(1.34) scaleY(1.06);
   transform-origin: center;
 
@@ -91,31 +95,22 @@ body::after{
   z-index: 0;
 }
 
-/* İçerik alanı */
+/* İçerik alanı (başlık + kartlar) */
 .ferman-content{
   position: relative;
   z-index: 1;
 
   width: min(var(--content-max), 86vw);
+  height: 100%;
   margin: 0 auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  /* Üst/alt boşluklar responsive */
-  padding-top: clamp(170px, 18vh, 260px);
-  padding-bottom: clamp(120px, 14vh, 200px);
-}
-
-@keyframes rollDown{
-  from { transform: translateY(-14px); opacity: 0; }
-  to   { transform: translateY(0);     opacity: 1; }
-}
-
-/* Hareket hassasiyeti olanlar için */
-@media (prefers-reduced-motion: reduce){
-  .ferman{ animation: none; }
+  /* başlık/kartları yukarıdan aşağı yerleştirme */
+  padding-top: clamp(170px, 18vh, 240px);
+  padding-bottom: clamp(90px, 12vh, 150px);
 }
 
 /* =========================
@@ -131,10 +126,7 @@ h1{
   letter-spacing: .2px;
 }
 
-/* =========================
-   ÜSTTEKİ YUVARLAK LOGO (RESPONSIVE FIX)
-   - clamp min/max düzeltildi (mobilde küçülür, PC’de büyür)
-========================= */
+/* Tuğra */
 .tugra{
   width: clamp(92px, 16vw, 160px);
   height: clamp(92px, 16vw, 160px);
@@ -153,16 +145,15 @@ h1{
   background: rgba(255,255,255,0.18);
   box-shadow: 0 14px 30px rgba(0,0,0,0.35);
 }
-
 .tugra img{
   width: 120%;
   height: 120%;
-  object-fit: cover; /* yuvarlakta daha dolu görünür */
+  object-fit: cover;
   display: block;
 }
 
 /* =========================
-   KARTLAR
+   KARTLAR (cam efekti)
 ========================= */
 .card{
   width: 100%;
@@ -177,21 +168,21 @@ h1{
   text-decoration: none;
   color: #1b1410;
 
-background: rgba(255, 255, 255, 0.06);
-border: 1px solid rgba(255, 255, 255, 0.14);
-box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+  /* CAM */
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+  backdrop-filter: blur(10px);
 
-backdrop-filter: blur(10px);
-  transition: transform .22s ease, box-shadow .22s ease;
+  transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
 }
-
 .card:hover{
   transform: translateY(-4px);
   box-shadow: 0 16px 28px rgba(0,0,0,0.14);
   background: rgba(255, 255, 255, 0.09);
 }
 
-/* URL ikon görseli */
+/* İkon */
 .icon-img{
   width: clamp(42px, 5vw, 60px);
   height: clamp(42px, 5vw, 60px);
@@ -200,7 +191,8 @@ backdrop-filter: blur(10px);
   opacity: 0.95;
 }
 
-/* İçerik yazıları */
+/* Yazılar */
+.content{ min-width: 0; }
 .content h2{
   font-size: clamp(18px, 2.2vw, 26px);
   margin-bottom: 6px;
@@ -211,97 +203,48 @@ backdrop-filter: blur(10px);
 }
 
 /* =========================
-   FOOTER
-========================= */
-footer{
-  margin-top: clamp(8px, 2vh, 18px);
-  text-align: center;
-  font-size: clamp(12px, 1.4vw, 14px);
-  opacity: .82;
-}
-
-/* =========================
-   MOBİL İNCE AYAR
-========================= */
-@media (max-width: 700px){
-  .background{
-    padding: 16px 10px;
-  }
-
-  .ferman{
-    width: 98vw;
-    min-height: 88svh;
-  }
-
-  .ferman::before{
-    transform: scaleX(1.18) scaleY(1.02);
-  }
-
-  .ferman-content{
-    width: min(92vw, 560px);
-    padding-top: 150px;
-    padding-bottom: 120px;
-  }
-
-  .card{
-    padding: 14px 14px;
-  }
-}
-
-/* =========================
    MOBİL (TÜM TELEFONLAR)
+   - Parşömen kenarlar ekrana değsin
+   - Kart parşömenin içinde kalsın
 ========================= */
 @media (max-width: 700px){
 
-  /* 1) KENARLARA DEĞMESİ İÇİN:
-        background yan padding'i sıfırla */
-  .background{
-    padding: 10px 0 16px;  /* soldan-sağdan 0 */
-  }
-
-  /* 2) PARŞÖMENİN KUTU GENİŞLİĞİ:
-        100vw = ekranın tam eni (kenarlara değer) */
+  /* 2) MOBİLDE KENARA TAM DEĞSİN */
   .ferman{
-    width: 100vw;
-    margin: 0;             /* tam ekrana otursun */
-    min-height: 120svh;    /* yüksekliği senin isteğin */
+    width: 100vw; /* ekranın tam eni */
   }
 
-  /* 3) PARŞÖMEN GÖRSELİNİN KENDİSİ:
-        Çok büyütme -> 1.06 civarı yeter.
-        background-size 100% 100% = kenarlara kadar yay */
+  /* 3) MOBİLDE PARŞÖMENİ ENİNE/Boyuna AYARLAMA
+     - scaleX büyürse parşömen “taşmış/garip” görünür
+     - burayı yavaş yavaş artırabilirsin */
   .ferman::before{
-    background-size: 100% 100%;
-    background-position: center;
-    transform: scaleX(1.06) scaleY(1.03);
+    transform: scaleX(1.10) scaleY(1.03);
   }
 
-  /* 4) KARTLARIN PARŞÖMEN İÇİNDE KALMASI:
-        içerik alanını ekranın içinden güvenli boşlukla tut */
+  /* 4) KARTLARIN PARŞÖMEN İÇİNDE KALMASI
+     - padding-left/right kartı içeri çeker */
   .ferman-content{
     width: 100%;
-    padding-left: 10px;   /* kartların sol/sağdan taşmaması */
-    padding-right: 10px;
+    padding-left: 18px;
+    padding-right: 18px;
 
-    padding-top: 112px;
+    padding-top: 120px;
     padding-bottom: 120px;
   }
 
-  /* 5) Kartı daha küçük ve güvenli yap */
+  /* Kartı mobilde biraz küçült ve limit koy */
   .card{
-    width: 100%;
-    max-width: 520px;      /* kartın çok büyümesini engeller */
-    margin: 12px auto;     /* ortala */
-
+    max-width: 520px;
     padding: 12px 12px;
     gap: 10px;
-
     overflow: hidden;
   }
 
-  .icon-img{
-    width: 38px;
-    height: 38px;
+  /* Uzun kelime taşmasın */
+  .content h2,
+  .content p{
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   h1{
@@ -314,26 +257,19 @@ footer{
     margin-bottom: 10px;
   }
 
-  .content{ min-width: 0; }
-  .content h2,
-  .content p{
-    overflow-wrap: anywhere;
-    word-break: break-word;
+  .icon-img{
+    width: 38px;
+    height: 38px;
   }
 }
+
+/* Çok küçük telefonlar */
 @media (max-width: 420px){
-  .ferman{
-    min-height: 130svh; /* istersen 130svh yapabilirsin */
-  }
-
-  .ferman::before{
-    transform: scaleX(1.04) scaleY(1.03);
-  }
-
   .ferman-content{
     padding-left: 14px;
     padding-right: 14px;
-    padding-top: 104px;
+
+    padding-top: 110px;
     padding-bottom: 116px;
   }
 
