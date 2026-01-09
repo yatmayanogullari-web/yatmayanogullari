@@ -174,3 +174,22 @@ footer{
 
   .card{ padding: 16px 16px; }
 }
+.tugra{
+  width: 64px;          /* boyut */
+  height: 64px;
+  border-radius: 50%;   /* yuvarlak */
+  overflow: hidden;     /* taşanı kırp */
+  display: grid;
+  place-items: center;
+
+  border: 2px solid rgba(255,255,255,0.35); /* yuvarlak çerçeve */
+  box-shadow: 0 10px 24px rgba(0,0,0,0.35); /* opsiyonel */
+  background: rgba(0,0,0,0.15);             /* opsiyonel */
+}
+
+.tugra img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* kare görseli kırpar, tam doldurur */
+  display: block;
+}
