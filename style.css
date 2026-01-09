@@ -281,3 +281,42 @@ h1{
     font-size: 23px;
   }
 }
+/* === MOBİL FORCE (EN SONDA OLSUN) === */
+@media (max-width: 700px){
+  .background{ padding: 0 !important; }
+
+  /* fermanı ekrana yapıştır */
+  .ferman{
+    left: 0 !important;
+    top: 0 !important;
+    transform: none !important;
+    width: 100vw !important;
+    height: 100dvh !important; /* mobilde daha doğru tam ekran */
+  }
+
+  /* parşömen ekranı doldursun */
+  .ferman::before{
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    transform: none !important;
+  }
+
+  /* kartlar parşömenin içine girsin (sağ-sol taşma bitir) */
+  .ferman-content{
+    width: 100% !important;
+    padding-left: 56px !important;
+    padding-right: 56px !important;
+  }
+
+  .card{
+    max-width: 100% !important;
+  }
+}
+
+/* çok küçük telefonlar */
+@media (max-width: 420px){
+  .ferman-content{
+    padding-left: 44px !important;
+    padding-right: 44px !important;
+  }
+}
