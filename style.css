@@ -280,8 +280,8 @@ footer{
         içerik alanını ekranın içinden güvenli boşlukla tut */
   .ferman-content{
     width: 100%;
-    padding-left: 18px;   /* kartların sol/sağdan taşmaması */
-    padding-right: 18px;
+    padding-left: 10px;   /* kartların sol/sağdan taşmaması */
+    padding-right: 10px;
 
     padding-top: 112px;
     padding-bottom: 120px;
@@ -323,7 +323,7 @@ footer{
 }
 @media (max-width: 420px){
   .ferman{
-    min-height: 120svh; /* istersen 130svh yapabilirsin */
+    min-height: 130svh; /* istersen 130svh yapabilirsin */
   }
 
   .ferman::before{
