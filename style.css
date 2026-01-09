@@ -64,14 +64,10 @@ body::after{
   position:absolute;
   inset:0;
 
-  /* GÖRSEL BOYUT/POZİSYON */
-  background: url("assets/textures/parchment.png") center / 135% auto no-repeat;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  background: url("assets/textures/parchment.png") center / contain no-repeat;
 
-  /* dengeli büyütme */
-  transform: scale(1.22);
+  /* ENİNE GENİŞLİK BURADAN */
+  transform: scaleX(1.35) scaleY(1.30);
   transform-origin: center;
 
   filter: drop-shadow(0 22px 34px rgba(0,0,0,0.42));
