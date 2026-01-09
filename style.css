@@ -1,27 +1,35 @@
+/* =========================
+   RESET + GENEL
+========================= */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 html, body { height: 100%; }
 
-body {
+:root{
+  --max-ferman: 1560px;
+  --content-max: 880px;
+  --card-radius: 14px;
+}
+
+body{
   font-family: Georgia, serif;
   color: #1b1410;
   overflow-x: hidden;
   background: #1a1310; /* olası boşlukta beyaz değil koyu görünsün */
 }
 
-/* ARKA PLAN: body’ye sabitlenir -> aşağı kaydırınca beyaz alan OLMAZ */
+/* =========================
+   ARKA PLAN: sabit + kaydırmada beyaz boşluk yok
+========================= */
 body::before{
   content:"";
   position: fixed;
   inset: 0;
 
-  /* BOYUT / POZİSYON AYARLARI */
   background-image: url("assets/textures/wall.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 
-  /* performans / titreme azaltma */
   transform: translateZ(0);
   will-change: transform;
 
@@ -35,20 +43,27 @@ body::after{
   z-index: -1;
 }
 
-/* SADECE ORTALAMA KAPSAYICI */
+/* =========================
+   SAYFA ORTALAYICI
+========================= */
 .background{
-  min-height: 100svh; /* mobilde daha stabil */
+  min-height: 100svh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: clamp(18px, 4vh, 44px) 0;
+  padding: clamp(16px, 4vh, 44px) 12px;
 }
 
-/* FERMAN: daha geniş + daha uzun ama dengeli */
+/* =========================
+   FERMAN (RESPONSIVE)
+   - Artık sabit height yok -> içerik uzarsa büyür
+========================= */
 .ferman{
-  width: min(1560px, 98vw);
-  height: clamp(820px, 94vh, 1320px); /* uzunluk kontrolü */
+  width: min(var(--max-ferman), 98vw);
   position: relative;
+
+  /* minimum “ferman dolu” hissi; ama içerik uzarsa büyür */
+  min-height: clamp(760px, 92vh, 1260px);
 
   background: transparent;
   box-shadow: none;
@@ -58,16 +73,17 @@ body::after{
   animation: rollDown 1.05s ease-out forwards;
 }
 
-/* Ferman görseli */
+/* Ferman görseli (arka kâğıt) */
 .ferman::before{
   content:"";
   position:absolute;
   inset:0;
 
-  background: url("assets/textures/parchment.png") center / contain no-repeat;
+  /* içerik uzadıkça ferman uzar; görüntüyü de birlikte uzatır */
+  background: url("assets/textures/parchment.png") center / 100% 100% no-repeat;
 
-  /* ENİNE GENİŞLİK BURADAN */
-  transform: scaleX(1.35) scaleY(1.30);
+  /* enine genişlik + az dikey genişlik */
+  transform: scaleX(1.34) scaleY(1.06);
   transform-origin: center;
 
   filter: drop-shadow(0 22px 34px rgba(0,0,0,0.42));
@@ -75,22 +91,21 @@ body::after{
   z-index: 0;
 }
 
-/* İÇERİK: ORTALAMA BURADA */
+/* İçerik alanı */
 .ferman-content{
   position: relative;
   z-index: 1;
 
-  height: 100%;
+  width: min(var(--content-max), 86vw);
+  margin: 0 auto;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  /* kartın sağ/sol boşluğu buradan ayarlanır */
-  width: min(820px, 74vw);
-  margin: 0 auto;
-
-  padding-top: clamp(190px, 22vh, 270px);
-  padding-bottom: clamp(130px, 16vh, 210px);
+  /* Üst/alt boşluklar responsive */
+  padding-top: clamp(170px, 18vh, 260px);
+  padding-bottom: clamp(120px, 14vh, 200px);
 }
 
 @keyframes rollDown{
@@ -98,24 +113,69 @@ body::after{
   to   { transform: translateY(0);     opacity: 1; }
 }
 
-/* ÜST */
-.header{ text-align:center; margin-bottom: 18px; }
-.tugra{ font-size: clamp(26px, 3vw, 42px); margin-bottom: 8px; opacity: .95; }
-h1{ font-size: clamp(34px, 4.2vw, 58px); letter-spacing: .2px; }
+/* Hareket hassasiyeti olanlar için */
+@media (prefers-reduced-motion: reduce){
+  .ferman{ animation: none; }
+}
 
-/* KART */
+/* =========================
+   HEADER
+========================= */
+.header{
+  text-align: center;
+  margin-bottom: clamp(10px, 1.6vh, 18px);
+}
+
+h1{
+  font-size: clamp(30px, 4vw, 58px);
+  letter-spacing: .2px;
+}
+
+/* =========================
+   ÜSTTEKİ YUVARLAK LOGO (RESPONSIVE FIX)
+   - clamp min/max düzeltildi (mobilde küçülür, PC’de büyür)
+========================= */
+.tugra{
+  width: clamp(92px, 16vw, 160px);
+  height: clamp(92px, 16vw, 160px);
+
+  margin: 0 auto clamp(10px, 1.8vh, 18px);
+  border-radius: 50%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: clamp(6px, 1.2vw, 12px);
+
+  border: 4px solid rgba(0,0,0,0.28);
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+}
+
+.tugra img{
+  width: 120%;
+  height: 120%;
+  object-fit: cover; /* yuvarlakta daha dolu görünür */
+  display: block;
+}
+
+/* =========================
+   KARTLAR
+========================= */
 .card{
   width: 100%;
-  display:flex;
-  align-items:center;
-  gap: 16px;
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 1.6vw, 16px);
 
-  padding: 18px 20px;
-  margin: 14px 0;
+  padding: clamp(14px, 1.9vw, 18px) clamp(14px, 2.1vw, 20px);
+  margin: clamp(10px, 1.5vh, 14px) 0;
 
-  border-radius: 14px;
-  text-decoration:none;
-  color:#1b1410;
+  border-radius: var(--card-radius);
+  text-decoration: none;
+  color: #1b1410;
 
   background: rgba(255, 248, 234, 0.70);
   border: 1px solid rgba(70, 45, 22, 0.18);
@@ -124,80 +184,75 @@ h1{ font-size: clamp(34px, 4.2vw, 58px); letter-spacing: .2px; }
   backdrop-filter: blur(3px);
   transition: transform .22s ease, box-shadow .22s ease;
 }
+
 .card:hover{
   transform: translateY(-4px);
   box-shadow: 0 16px 28px rgba(0,0,0,0.24);
 }
 
-/* İKON: EMOJI kullanıyorsan bu, URL ikon kullanacaksan aşağıdaki .icon-img devreye girer */
-.icon{ font-size: clamp(34px, 3.5vw, 54px); flex-shrink:0; opacity:.95; }
-
-/* URL'den görsel ikon kullanmak için */
+/* URL ikon görseli */
 .icon-img{
-  width: clamp(40px, 4vw, 56px);
-  height: clamp(40px, 4vw, 56px);
+  width: clamp(42px, 5vw, 60px);
+  height: clamp(42px, 5vw, 60px);
   object-fit: contain;
   flex-shrink: 0;
   opacity: 0.95;
 }
 
-.content h2{ font-size: clamp(18px, 2.3vw, 26px); margin-bottom: 6px; }
-.content p{ font-size: clamp(13px, 1.6vw, 16px); opacity: .9; }
+/* İçerik yazıları */
+.content h2{
+  font-size: clamp(18px, 2.2vw, 26px);
+  margin-bottom: 6px;
+}
+.content p{
+  font-size: clamp(13px, 1.6vw, 16px);
+  opacity: .9;
+}
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 footer{
-  margin-top: auto;
-  padding-top: 10px;
-  text-align:center;
-  font-size: 14px;
+  margin-top: clamp(8px, 2vh, 18px);
+  text-align: center;
+  font-size: clamp(12px, 1.4vw, 14px);
   opacity: .82;
 }
 
-/* MOBİL */
+/* =========================
+   MOBİL İNCE AYAR
+========================= */
 @media (max-width: 700px){
-  .background{ padding: 18px 0; }
+  .background{
+    padding: 16px 10px;
+  }
 
   .ferman{
     width: 98vw;
-    height: 92vh;
+    min-height: 88svh;
   }
 
   .ferman::before{
-    transform: scale(1.12);
+    transform: scaleX(1.18) scaleY(1.02);
   }
 
   .ferman-content{
     width: min(92vw, 560px);
     padding-top: 150px;
-    padding-bottom: 130px;
+    padding-bottom: 120px;
   }
 
-  .card{ padding: 16px 16px; }
-}
-/* ÜSTTEKİ YUVARLAK LOGO */
-.tugra{
-  width: clamp(150px, 12vw, 150px);
-  height: clamp(110px, 12vw, 150px);
-
-  margin: 0 auto 18px;         /* ortala + altta boşluk */
-  border-radius: 50%;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 10px;               /* logo kırpılmasın diye iç boşluk */
-  box-sizing: border-box;
-
-  border: 4px solid rgba(0,0,0,0.28);   /* çerçeveyi kalınlaştır */
-  background: rgba(255,255,255,0.18);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
+  .card{
+    padding: 14px 14px;
+  }
 }
 
-.tugra img{
-  width: 150%;
-  height: 112%;
-  object-fit: contain;         /* logoyu kırpma */
-  display: block;
+@media (max-width: 420px){
+  .ferman-content{
+    padding-top: 140px;
+    padding-bottom: 110px;
+  }
+  .card{
+    gap: 10px;
+  }
 }
