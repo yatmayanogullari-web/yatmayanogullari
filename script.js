@@ -1,12 +1,13 @@
-// Ge// Ferman açılış kontrolü
+// Ferman açılış kontrolü
 document.addEventListener("DOMContentLoaded", () => {
   const ferman = document.getElementById("ferman");
-
   if (!ferman) return;
 
   // Yeniden yüklemede animasyonun düzgün çalışması için
   ferman.style.animation = "none";
-  ferman.offsetHeight; // reflow tetikle
+  // reflow tetikle
+  void ferman.offsetHeight;
   ferman.style.animation = "";
 });
-lecekte animasyon veya ek davranışlar buraya eklenebilir
+
+// Gelecekte animasyon veya ek davranışlar buraya eklenebilir
