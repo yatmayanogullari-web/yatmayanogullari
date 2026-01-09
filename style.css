@@ -174,22 +174,30 @@ footer{
 
   .card{ padding: 16px 16px; }
 }
+/* ÜSTTEKİ YUVARLAK LOGO */
 .tugra{
-  width: 64px;          /* boyut */
-  height: 64px;
-  border-radius: 50%;   /* yuvarlak */
-  overflow: hidden;     /* taşanı kırp */
-  display: grid;
-  place-items: center;
+  width: clamp(88px, 10vw, 140px);
+  height: clamp(88px, 10vw, 140px);
 
-  border: 2px solid rgba(255,255,255,0.35); /* yuvarlak çerçeve */
-  box-shadow: 0 10px 24px rgba(0,0,0,0.35); /* opsiyonel */
-  background: rgba(0,0,0,0.15);             /* opsiyonel */
+  margin: 0 auto 18px;         /* ortala + altta boşluk */
+  border-radius: 50%;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;               /* logo kırpılmasın diye iç boşluk */
+  box-sizing: border-box;
+
+  border: 4px solid rgba(0,0,0,0.28);   /* çerçeveyi kalınlaştır */
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
 }
 
 .tugra img{
   width: 100%;
   height: 100%;
-  object-fit: cover;    /* kare görseli kırpar, tam doldurur */
+  object-fit: contain;         /* logoyu kırpma */
   display: block;
 }
