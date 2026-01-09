@@ -1,322 +1,403 @@
 /* =========================
-   RESET + GENEL
+  RESET
 ========================= */
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body{
-  height: 100%;
-  overflow: hidden;          /* scroll kapalı */
-  overscroll-behavior: none; /* mobil bounce kapalı */
-}
-
+html, body { height: 100%; }
 :root{
-  --max-ferman: 1560px;
-  --content-max: 880px;
-  --card-radius: 14px;
+  --ink: #1b1410;
+  --gold: #b58a2b;
+  --gold2:#e1c16e;
+  --wine:#6e2323;
+
+  --bg: #15110e;
+
+  --max: 980px;
+  --radius: 18px;
+
+  --padX: clamp(18px, 4vw, 34px);
+  --padY: clamp(22px, 5vw, 40px);
 }
 
 body{
-  font-family: Georgia, serif;
-  color: #1b1410;
-  background: #1a1310;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  overflow: hidden; /* sayfa kaymasın; içerik içeride scroll olacak */
 }
 
 /* =========================
-   ARKA PLAN (duvar)
+  SAHNE / DUVAR ARKA PLAN
 ========================= */
-body::before{
-  content:"";
+.scene{
   position: fixed;
   inset: 0;
-
-  background-image: url("assets/textures/wall.png");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-
-  z-index: -2;
-}
-body::after{
-  content:"";
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.28);
-  z-index: -1;
+  display: grid;
+  place-items: center;
 }
 
-/* =========================
-   SAYFA KAPSAYICI (ekran sabit)
-========================= */
-.background{
-  height: 100svh;
-  width: 100vw;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 0;
-}
-
-/* =========================
-   FERMAN (ekrana sabit)
-========================= */
-.ferman{
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-
-  width: min(var(--max-ferman), 98vw);
-  height: 100svh;
-
-  background: transparent;
-  overflow: hidden;
-}
-
-/* Parşömen görseli */
-.ferman::before{
+/* duvar */
+.scene::before{
   content:"";
   position:absolute;
   inset:0;
-
-  background: url("assets/textures/parchment.png") center / 100% 100% no-repeat;
-
-  /* DESKTOP parşömeni biraz genişlet */
-  transform: scaleX(1.34) scaleY(1.06);
-  transform-origin: center;
-
-  filter: drop-shadow(0 22px 34px rgba(0,0,0,0.42));
-  pointer-events: none;
+  background: url("assets/textures/wall.png") center / cover no-repeat;
+  filter: contrast(1.02) saturate(0.95);
+  transform: scale(1.02);
   z-index: 0;
 }
 
-/* İçerik alanı */
-.ferman-content{
-  position: relative;
+/* karartma + vinyet */
+.scene__overlay{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(60% 60% at 50% 25%, rgba(0,0,0,0.15), rgba(0,0,0,0.62)),
+    radial-gradient(120% 90% at 50% 120%, rgba(0,0,0,0.82), rgba(0,0,0,0.35));
   z-index: 1;
+}
 
-  width: min(var(--content-max), 86vw);
-  height: 100%;
-  margin: 0 auto;
+/* toz/ışık parçacıkları */
+.scene__dust{
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.06) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 40%, rgba(255,255,255,0.05) 0 2px, transparent 3px),
+    radial-gradient(circle at 40% 75%, rgba(255,255,255,0.04) 0 2px, transparent 3px),
+    radial-gradient(circle at 85% 80%, rgba(255,255,255,0.04) 0 2px, transparent 3px),
+    radial-gradient(circle at 10% 85%, rgba(255,255,255,0.03) 0 2px, transparent 3px);
+  filter: blur(0.3px);
+  animation: dustMove 14s linear infinite;
+  z-index: 2;
+  pointer-events:none;
+}
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding-top: clamp(170px, 18vh, 240px);
-  padding-bottom: clamp(90px, 12vh, 150px);
+@keyframes dustMove{
+  0%   { transform: translate3d(0,0,0) scale(1); opacity: .85; }
+  50%  { transform: translate3d(2%, -2%, 0) scale(1.02); opacity: 1; }
+  100% { transform: translate3d(0,0,0) scale(1); opacity: .85; }
 }
 
 /* =========================
-   HEADER
+  İÇERİK VIEWPORT (SCROLL BURADA)
 ========================= */
-.header{
+.viewport{
+  position: relative;
+  z-index: 3;
+
+  width: 100%;
+  height: 100dvh;
+
+  display: grid;
+  place-items: center;
+
+  padding:
+    max(18px, env(safe-area-inset-top))
+    max(16px, env(safe-area-inset-right))
+    max(18px, env(safe-area-inset-bottom))
+    max(16px, env(safe-area-inset-left));
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* scroll bar (PC) */
+.viewport::-webkit-scrollbar{ width: 10px; }
+.viewport::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,0.14);
+  border-radius: 99px;
+}
+.viewport::-webkit-scrollbar-track{ background: rgba(0,0,0,0.12); }
+
+/* =========================
+  FERMAN
+========================= */
+.ferman{
+  width: min(var(--max), 94vw);
+  position: relative;
+
+  /* ferman görseli: ölçeklenebilir svg */
+  background: url("assets/textures/parchment-scroll.svg") center / 100% 100% no-repeat;
+
+  border-radius: 22px;
+  filter: drop-shadow(0 18px 36px rgba(0,0,0,0.55));
+
+  padding: calc(var(--padY) + 18px) var(--padX) var(--padY);
+
+  /* giriş animasyonu */
+  animation: fermanIn 680ms cubic-bezier(.2,.85,.2,1) both;
+}
+
+@keyframes fermanIn{
+  from { transform: translateY(14px) scale(.98); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* parşömen üstünde hafif parlama */
+.ferman__shine{
+  position:absolute;
+  inset: 0;
+  border-radius: 22px;
+  background:
+    radial-gradient(80% 40% at 30% 10%, rgba(255,255,255,0.22), transparent 55%),
+    radial-gradient(70% 40% at 80% 30%, rgba(255,255,255,0.10), transparent 55%);
+  mix-blend-mode: soft-light;
+  pointer-events:none;
+  animation: shine 9s ease-in-out infinite;
+}
+
+@keyframes shine{
+  0%,100% { opacity: .55; }
+  50%     { opacity: .85; }
+}
+
+/* =========================
+  HEADER / TUĞRA
+========================= */
+.mast{
   text-align: center;
-  margin-bottom: clamp(10px, 1.6vh, 18px);
+  padding-top: 6px;
+  margin-bottom: clamp(16px, 2.8vh, 24px);
+}
+
+.tugra{
+  width: clamp(98px, 18vw, 168px);
+  height: clamp(98px, 18vw, 168px);
+
+  margin: 0 auto 10px;
+  border-radius: 999px;
+  overflow: hidden;
+
+  display: grid;
+  place-items: center;
+
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.28), rgba(255,255,255,0.10));
+  border: 1px solid rgba(0,0,0,0.28);
+
+  box-shadow:
+    0 18px 32px rgba(0,0,0,0.22),
+    inset 0 0 0 2px rgba(255,255,255,0.10);
+
+  position: relative;
+}
+
+.tugra::after{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(225,193,110,0.42), transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(181,138,43,0.30), transparent 55%);
+  opacity: .55;
+  mix-blend-mode: overlay;
+  animation: tugraGlow 6.5s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes tugraGlow{
+  0%,100% { transform: translate3d(0,0,0); opacity: .45; }
+  50%     { transform: translate3d(2%, -2%, 0); opacity: .75; }
+}
+
+.tugra img{
+  width: 122%;
+  height: 122%;
+  object-fit: cover;
+  display:block;
+  transform: translateY(1px);
 }
 
 h1{
-  font-size: clamp(30px, 4vw, 58px);
-  letter-spacing: .2px;
+  font-size: clamp(26px, 4.2vw, 58px);
+  letter-spacing: 0.3px;
+  line-height: 1.05;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25);
 }
 
-/* Tuğra */
-.tugra{
-  width: clamp(92px, 16vw, 160px);
-  height: clamp(92px, 16vw, 160px);
-
-  margin: 0 auto clamp(10px, 1.8vh, 18px);
-  border-radius: 50%;
-  overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: clamp(6px, 1.2vw, 12px);
-
-  border: 4px solid rgba(0,0,0,0.28);
-  background: rgba(255,255,255,0.18);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.35);
-}
-.tugra img{
-  width: 120%;
-  height: 120%;
-  object-fit: cover;
-  display: block;
+.subtitle{
+  margin-top: 8px;
+  font-size: clamp(13px, 1.8vw, 16px);
+  opacity: .86;
 }
 
 /* =========================
-   KARTLAR (cam efekti)
+  LINK KARTLARI (Osmanlı hissi + modern)
 ========================= */
+.links{
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
 .card{
-  width: 100%;
-  max-width: 720px; /* PC'de kartı küçültür */
-  margin: clamp(10px, 1.5vh, 14px) auto; /* hem boşluk hem ortalama */
-
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: clamp(12px, 1.6vw, 16px);
+  gap: 12px;
 
-  padding: clamp(14px, 1.9vw, 18px) clamp(14px, 2.1vw, 20px);
-
-  border-radius: var(--card-radius);
   text-decoration: none;
-  color: #1b1410;
+  color: var(--ink);
 
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+  padding: 14px 14px;
+  border-radius: var(--radius);
+
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(0,0,0,0.14);
+
+  box-shadow:
+    0 10px 18px rgba(0,0,0,0.12),
+    inset 0 0 0 1px rgba(255,255,255,0.18);
+
   backdrop-filter: blur(10px);
 
-  transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+  position: relative;
+  overflow: hidden;
 }
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  background:
+    linear-gradient(120deg, transparent 0%, rgba(225,193,110,0.18) 30%, transparent 60%);
+  transform: translateX(-55%);
+  opacity: 0;
+  transition: transform .55s ease, opacity .25s ease;
+  pointer-events:none;
+}
+
 .card:hover{
-  transform: translateY(-4px);
-  box-shadow: 0 16px 28px rgba(0,0,0,0.14);
-  background: rgba(255, 255, 255, 0.09);
+  transform: translateY(-3px);
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(181,138,43,0.22);
+  box-shadow:
+    0 16px 26px rgba(0,0,0,0.16),
+    inset 0 0 0 1px rgba(255,255,255,0.18);
+}
+.card:hover::before{
+  transform: translateX(55%);
+  opacity: 1;
 }
 
-/* İkon */
-.icon-img{
-  width: clamp(42px, 5vw, 60px);
-  height: clamp(42px, 5vw, 60px);
+.card__icon{
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.12);
+}
+.card__icon img{
+  width: 88%;
+  height: 88%;
   object-fit: contain;
-  flex-shrink: 0;
-  opacity: 0.95;
+  display:block;
+  opacity: .95;
 }
 
-/* Yazılar */
-.content{ min-width: 0; }
-.content h2{
-  font-size: clamp(18px, 2.2vw, 26px);
-  margin-bottom: 6px;
+.card__txt{ min-width: 0; }
+
+.card__top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
-.content p{
-  font-size: clamp(13px, 1.6vw, 16px);
-  opacity: .9;
+
+.card h2{
+  font-size: clamp(16px, 2.1vw, 22px);
+  line-height: 1.1;
+}
+
+.card p{
+  margin-top: 6px;
+  font-size: clamp(13px, 1.8vw, 15px);
+  opacity: .90;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.badge{
+  flex: none;
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  color: #2a1f14;
+  background: linear-gradient(180deg, rgba(225,193,110,0.70), rgba(181,138,43,0.45));
+  border: 1px solid rgba(0,0,0,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.20);
+}
+
+.card__arrow{
+  font-size: 28px;
+  line-height: 1;
+  opacity: .45;
+  transform: translateY(-1px);
 }
 
 /* =========================
-   MOBİL (TÜM TELEFONLAR)
+  FOOTER / MÜHÜR
+========================= */
+.seal{
+  margin-top: clamp(18px, 3.2vh, 26px);
+  text-align: center;
+  opacity: .85;
+  padding-bottom: 4px;
+}
+
+.seal__line{
+  height: 2px;
+  width: min(460px, 70%);
+  margin: 0 auto 12px;
+  background: linear-gradient(90deg, transparent, rgba(181,138,43,0.55), transparent);
+}
+
+.seal p{
+  font-size: 13px;
+}
+
+/* =========================
+  REVEAL ANİMASYONLARI
+========================= */
+.reveal{
+  opacity: 0;
+  transform: translateY(10px);
+}
+.reveal.is-in{
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .45s ease, transform .45s ease;
+}
+
+/* =========================
+  MOBİL AYARLAR
 ========================= */
 @media (max-width: 700px){
-
-  /* Parşömen tam ekran */
   .ferman{
-    width: 100vw;
-    height: 100svh;
-    margin: 0;
+    width: 94vw;
+    padding: 22px 18px 22px;
+    border-radius: 20px;
   }
 
-  /* Mobilde parşömeni şişirme */
-  .ferman::before{
-    background-size: 100% 100%;
-    background-position: center;
-    transform: none;
-  }
-
-  /* Kartların parşömenin içinde kalması için iç boşluk */
-  .ferman-content{
-    width: 100%;
-    padding-left: clamp(34px, 9vw, 54px);
-    padding-right: clamp(34px, 9vw, 54px);
-
-    padding-top: 118px;
-    padding-bottom: 120px;
-  }
-
-  /* Mobilde kartı küçült */
-  .card{
-    max-width: 440px;
-    margin: 12px auto;
-
-    padding: 12px 12px;
-    gap: 10px;
-    overflow: hidden;
-  }
-
-  h1{
-    font-size: clamp(24px, 7vw, 34px);
-  }
-
-  .tugra{
-    width: 88px;
-    height: 88px;
-    margin-bottom: 10px;
-  }
-
-  .icon-img{
-    width: 36px;
-    height: 36px;
-  }
-
-  .content h2, .content p{
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
+  .card__icon{ width: 48px; height: 48px; border-radius: 14px; }
+  .card__arrow{ font-size: 26px; }
 }
 
-/* Çok küçük telefonlar */
+/* küçük telefon */
 @media (max-width: 420px){
-  .ferman-content{
-    padding-left: 28px;
-    padding-right: 28px;
-    padding-top: 110px;
-    padding-bottom: 116px;
-  }
-
-  .card{
-    max-width: 360px;
-    padding: 11px 11px;
-    gap: 9px;
-  }
-
-  .icon-img{
-    width: 32px;
-    height: 32px;
-  }
-
-  h1{
-    font-size: 23px;
-  }
-}
-/* === MOBİL FORCE (EN SONDA OLSUN) === */
-@media (max-width: 700px){
-  .background{ padding: 0 !important; }
-
-  /* fermanı ekrana yapıştır */
-  .ferman{
-    left: 0 !important;
-    top: 0 !important;
-    transform: none !important;
-    width: 100vw !important;
-    height: 100dvh !important; /* mobilde daha doğru tam ekran */
-  }
-
-  /* parşömen ekranı doldursun */
-  .ferman::before{
-    background-size: 100% 100% !important;
-    background-position: center !important;
-    transform: none !important;
-  }
-
-  /* kartlar parşömenin içine girsin (sağ-sol taşma bitir) */
-  .ferman-content{
-    width: 100% !important;
-    padding-left: 56px !important;
-    padding-right: 56px !important;
-  }
-
-  .card{
-    max-width: 100% !important;
-  }
+  .ferman{ width: 95vw; }
+  .subtitle{ opacity: .88; }
 }
 
-/* çok küçük telefonlar */
-@media (max-width: 420px){
-  .ferman-content{
-    padding-left: 44px !important;
-    padding-right: 44px !important;
-  }
+/* motion hassasiyeti */
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+  .reveal{ opacity: 1; transform: none; }
 }
