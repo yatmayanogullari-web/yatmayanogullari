@@ -248,45 +248,54 @@ footer{
   }
 }
 
+/* =========================
+   MOBİL (TÜM TELEFONLAR)
+========================= */
 @media (max-width: 700px){
   .background{
     padding: 10px 8px 16px;
   }
 
-  /* Parşömen ekran boyu kadar olsun */
+  /* Parşömen her telefonda ekran boyu kadar */
   .ferman{
     width: 98vw;
-    min-height: 100svh;   /* önemli: ekran boyu */
+    min-height: 100svh;  /* önemli: yukarıdan aşağı kaplasın */
   }
 
-  /* Parşömeni mobilde daha az enine ger */
+  /* Parşömen: germe yok, cover ile uyumlu */
   .ferman::before{
-    transform: scaleX(1.06) scaleY(1.02);
+    /* senin üstteki background shorthand’ını burada override ediyoruz */
+    background-size: cover;
+    background-position: center;
+
+    /* mobilde enine aşırı genişletmeyi azalt */
+    transform: scaleX(1.04) scaleY(1.02);
   }
 
-  /* İçerik alanını daralt -> kart taşmasın */
+  /* İç alanı daralt -> kart taşmasın */
   .ferman-content{
-    width: min(80vw, 460px);
-    padding-top: 110px;   /* yukarı al */
-    padding-bottom: 120px;
-
+    width: min(78vw, 420px);
     padding-left: 8px;
     padding-right: 8px;
+
+    /* üst alanı biraz yukarıda tut */
+    padding-top: 112px;
+    padding-bottom: 120px;
   }
 
-  /* Başlığı mobilde biraz küçült */
+  /* Başlık mobilde daha dengeli */
   h1{
     font-size: clamp(24px, 7vw, 34px);
   }
 
-  /* Tuğra biraz küçülsün */
+  /* Tuğra mobilde biraz küçülsün */
   .tugra{
-    width: 92px;
-    height: 92px;
+    width: 88px;
+    height: 88px;
     margin-bottom: 10px;
   }
 
-  /* Kartı küçült + taşmayı engelle */
+  /* Kart: eninden taşmayı bitir */
   .card{
     width: 100%;
     max-width: 100%;
@@ -296,13 +305,12 @@ footer{
     padding: 12px 12px;
     gap: 10px;
 
-    overflow: hidden;
+    overflow: hidden; /* içerik taşarsa kart içinde kalsın */
   }
 
-  /* İkonu küçült */
   .icon-img{
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
 
   /* Flex taşma fix + uzun kelime kır */
@@ -311,5 +319,32 @@ footer{
   .content p{
     overflow-wrap: anywhere;
     word-break: break-word;
+  }
+}
+
+/* Çok küçük telefonlar */
+@media (max-width: 420px){
+  .ferman::before{
+    transform: scaleX(1.02) scaleY(1.02);
+  }
+
+  .ferman-content{
+    width: 86vw;         /* çok küçükte biraz genişlet, ama yine içerde */
+    padding-top: 104px;
+    padding-bottom: 116px;
+  }
+
+  .card{
+    padding: 11px 11px;
+    gap: 9px;
+  }
+
+  .icon-img{
+    width: 34px;
+    height: 34px;
+  }
+
+  h1{
+    font-size: 23px;
   }
 }
