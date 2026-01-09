@@ -252,60 +252,51 @@ footer{
    MOBİL (TÜM TELEFONLAR)
 ========================= */
 @media (max-width: 700px){
+
+  /* 1) KENARLARA DEĞMESİ İÇİN:
+        background yan padding'i sıfırla */
   .background{
-    padding: 10px 8px 16px;
+    padding: 10px 0 16px;  /* soldan-sağdan 0 */
   }
 
-  /* Parşömen her telefonda ekran boyu kadar */
+  /* 2) PARŞÖMENİN KUTU GENİŞLİĞİ:
+        100vw = ekranın tam eni (kenarlara değer) */
   .ferman{
-    width: 120vw;
-    min-height: 120svh;  /* önemli: yukarıdan aşağı kaplasın */
+    width: 100vw;
+    margin: 0;             /* tam ekrana otursun */
+    min-height: 120svh;    /* yüksekliği senin isteğin */
   }
 
-  /* Parşömen: germe yok, cover ile uyumlu */
+  /* 3) PARŞÖMEN GÖRSELİNİN KENDİSİ:
+        Çok büyütme -> 1.06 civarı yeter.
+        background-size 100% 100% = kenarlara kadar yay */
   .ferman::before{
-  /* zoom yok -> parşömen parşömen gibi kalır */
-  background-size: 100% 100%;
-  background-position: center;
-
-  /* mobilde çok az genişletme yeter, abartma yok */
-  transform: scaleX(1.30) scaleY(1.20);
+    background-size: 100% 100%;
+    background-position: center;
+    transform: scaleX(1.06) scaleY(1.03);
   }
 
-  /* İç alanı daralt -> kart taşmasın */
+  /* 4) KARTLARIN PARŞÖMEN İÇİNDE KALMASI:
+        içerik alanını ekranın içinden güvenli boşlukla tut */
   .ferman-content{
-    width: min(78vw, 420px);
-    padding-left: 8px;
-    padding-right: 8px;
+    width: 100%;
+    padding-left: 18px;   /* kartların sol/sağdan taşmaması */
+    padding-right: 18px;
 
-    /* üst alanı biraz yukarıda tut */
     padding-top: 112px;
     padding-bottom: 120px;
   }
 
-  /* Başlık mobilde daha dengeli */
-  h1{
-    font-size: clamp(24px, 7vw, 34px);
-  }
-
-  /* Tuğra mobilde biraz küçülsün */
-  .tugra{
-    width: 88px;
-    height: 88px;
-    margin-bottom: 10px;
-  }
-
-  /* Kart: eninden taşmayı bitir */
+  /* 5) Kartı daha küçük ve güvenli yap */
   .card{
     width: 100%;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 520px;      /* kartın çok büyümesini engeller */
+    margin: 12px auto;     /* ortala */
 
     padding: 12px 12px;
     gap: 10px;
 
-    overflow: hidden; /* içerik taşarsa kart içinde kalsın */
+    overflow: hidden;
   }
 
   .icon-img{
@@ -313,7 +304,16 @@ footer{
     height: 38px;
   }
 
-  /* Flex taşma fix + uzun kelime kır */
+  h1{
+    font-size: clamp(24px, 7vw, 34px);
+  }
+
+  .tugra{
+    width: 88px;
+    height: 88px;
+    margin-bottom: 10px;
+  }
+
   .content{ min-width: 0; }
   .content h2,
   .content p{
@@ -321,20 +321,24 @@ footer{
     word-break: break-word;
   }
 }
+@media (max-width: 420px){
+  .ferman{
+    min-height: 120svh; /* istersen 130svh yapabilirsin */
+  }
 
-/* Çok küçük telefonlar */
-@media (max-width: 700px){
   .ferman::before{
-    transform: scaleX(1.02) scaleY(1.02);
+    transform: scaleX(1.04) scaleY(1.03);
   }
 
   .ferman-content{
-    width: 86vw;         /* çok küçükte biraz genişlet, ama yine içerde */
+    padding-left: 14px;
+    padding-right: 14px;
     padding-top: 104px;
     padding-bottom: 116px;
   }
 
   .card{
+    max-width: 480px;
     padding: 11px 11px;
     gap: 9px;
   }
