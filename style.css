@@ -258,7 +258,7 @@ footer{
 
   /* Parşömen her telefonda ekran boyu kadar */
   .ferman{
-    width: 100vw;
+    width: 110vw;
     min-height: 120svh;  /* önemli: yukarıdan aşağı kaplasın */
   }
 
@@ -269,7 +269,7 @@ footer{
   background-position: center;
 
   /* mobilde çok az genişletme yeter, abartma yok */
-  transform: scaleX(1.10) scaleY(1.20);
+  transform: scaleX(1.20) scaleY(1.20);
   }
 
   /* İç alanı daralt -> kart taşmasın */
@@ -323,7 +323,7 @@ footer{
 }
 
 /* Çok küçük telefonlar */
-@media (max-width: 420px){
+@media (max-width: 700px){
   .ferman::before{
     transform: scaleX(1.02) scaleY(1.02);
   }
