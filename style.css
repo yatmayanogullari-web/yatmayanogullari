@@ -364,13 +364,16 @@ h1{
 }
 
 /* =========================
-  REVEAL ANİMASYONLARI
+  REVEAL (JS varsa animasyon, yoksa kartlar görünür)
 ========================= */
-.reveal{
+.reveal{ opacity: 1; transform: none; } /* default: her koşulda görünür */
+
+html.has-js .reveal{
   opacity: 0;
   transform: translateY(10px);
 }
-.reveal.is-in{
+
+html.has-js .reveal.is-in{
   opacity: 1;
   transform: translateY(0);
   transition: opacity .45s ease, transform .45s ease;
@@ -380,12 +383,26 @@ h1{
   MOBİL AYARLAR
 ========================= */
 @media (max-width: 700px){
-  .ferman{
-    width: 94vw;
-    padding: 22px 18px 22px;
-    border-radius: 20px;
-  }
+.ferman{
+  width: min(var(--max), 94vw);
+  position: relative;
 
+  /* PNG parşömen */
+  background: url("assets/textures/parsomen.png") center / 100% 100% no-repeat;
+
+  border-radius: 22px;
+  filter: drop-shadow(0 18px 36px rgba(0,0,0,0.55));
+
+  /* EKİBİ: parşömen ekrana yayılsın */
+  min-height: 90dvh;              /* ekranın neredeyse tamamı */
+  display: flex;
+  flex-direction: column;
+
+  /* ruloların içine yazı girmesin */
+  padding: clamp(44px, 6vh, 70px) var(--padX) clamp(44px, 6vh, 70px);
+
+  animation: fermanIn 680ms cubic-bezier(.2,.85,.2,1) both;
+}
   .card__icon{ width: 48px; height: 48px; border-radius: 14px; }
   .card__arrow{ font-size: 26px; }
 }
