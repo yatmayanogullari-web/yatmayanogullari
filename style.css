@@ -114,17 +114,23 @@ body{
   FERMAN
 ========================= */
 .ferman{
+  /* ekranı yukarı-aşağı doldursun */
+  height: 92dvh;
   width: min(var(--max), 94vw);
   position: relative;
 
-  /* SVG yerine PNG */
+  /* PNG parşömen */
   background: url("assets/textures/parsomen.png") center / 100% 100% no-repeat;
 
   border-radius: 22px;
   filter: drop-shadow(0 18px 36px rgba(0,0,0,0.55));
 
-  /* ruloların üst-altına yazı girmesin diye padding’i biraz arttırdım */
-  padding: calc(var(--padY) + 52px) var(--padX) calc(var(--padY) + 52px);
+  /* içerik düzeni: header / links (scroll) / footer */
+  display: flex;
+  flex-direction: column;
+
+  /* ruloların içine yazı girmesin */
+  padding: clamp(64px, 7vh, 92px) var(--padX) clamp(78px, 8vh, 110px);
 
   animation: fermanIn 680ms cubic-bezier(.2,.85,.2,1) both;
 }
@@ -158,7 +164,7 @@ body{
 .mast{
   text-align: center;
   padding-top: 6px;
-  margin-bottom: clamp(16px, 2.8vh, 24px);
+  margin-bottom: 10px; /* kartlar daha erken başlasın */
 }
 
 .tugra{
@@ -222,14 +228,28 @@ h1{
 }
 
 /* =========================
-  LINK KARTLARI (Osmanlı hissi + modern)
+  LINK KARTLARI (parşömenin içinde scroll)
 ========================= */
 .links{
+  flex: 1;
+  min-height: 0;
+
   display: grid;
   gap: 12px;
-  margin-top: 10px;
-  padding-bottom: 10px;
+
+  margin-top: 12px;
+  padding: 8px 6px;
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
+
+.links::-webkit-scrollbar{ width: 10px; }
+.links::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,0.18);
+  border-radius: 99px;
+}
+.links::-webkit-scrollbar-track{ background: rgba(0,0,0,0.08); }
 
 .card{
   display: grid;
@@ -346,10 +366,11 @@ h1{
   FOOTER / MÜHÜR
 ========================= */
 .seal{
-  margin-top: clamp(18px, 3.2vh, 26px);
+  margin-top: 14px;
   text-align: center;
-  opacity: .85;
-  padding-bottom: 4px;
+  opacity: .92;
+  padding-top: 8px;
+  padding-bottom: 10px;
 }
 
 .seal__line{
@@ -360,61 +381,47 @@ h1{
 }
 
 .seal p{
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* =========================
-  REVEAL (JS varsa animasyon, yoksa kartlar görünür)
+  KARTLAR HER KOŞULDA GÖRÜNÜR
 ========================= */
-.reveal{ opacity: 1; transform: none; } /* default: her koşulda görünür */
-
-html.has-js .reveal{
-  opacity: 0;
-  transform: translateY(10px);
+.reveal{
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-html.has-js .reveal.is-in{
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity .45s ease, transform .45s ease;
+.reveal.is-in{
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* =========================
   MOBİL AYARLAR
 ========================= */
 @media (max-width: 700px){
-.ferman{
-  width: min(var(--max), 94vw);
-  position: relative;
+  .ferman{
+    height: 94dvh; /* mobilde biraz daha uzun */
+    width: 95vw;
 
-  /* PNG parşömen */
-  background: url("assets/textures/parsomen.png") center / 100% 100% no-repeat;
+    /* ruloların içine yazı girmesin */
+    padding: clamp(56px, 7vh, 88px) var(--padX) clamp(78px, 9vh, 120px);
+    border-radius: 20px;
+  }
 
-  border-radius: 22px;
-  filter: drop-shadow(0 18px 36px rgba(0,0,0,0.55));
-
-  /* EKİBİ: parşömen ekrana yayılsın */
-  min-height: 90dvh;              /* ekranın neredeyse tamamı */
-  display: flex;
-  flex-direction: column;
-
-  /* ruloların içine yazı girmesin */
-  padding: clamp(44px, 6vh, 70px) var(--padX) clamp(44px, 6vh, 70px);
-
-  animation: fermanIn 680ms cubic-bezier(.2,.85,.2,1) both;
-}
   .card__icon{ width: 48px; height: 48px; border-radius: 14px; }
   .card__arrow{ font-size: 26px; }
 }
 
 /* küçük telefon */
 @media (max-width: 420px){
-  .ferman{ width: 95vw; }
+  .ferman{ width: 96vw; }
   .subtitle{ opacity: .88; }
 }
 
 /* motion hassasiyeti */
 @media (prefers-reduced-motion: reduce){
   *{ animation: none !important; transition: none !important; }
-  .reveal{ opacity: 1; transform: none; }
+  .reveal{ opacity: 1 !important; transform: none !important; }
 }
