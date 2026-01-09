@@ -425,3 +425,19 @@ h1{
   *{ animation: none !important; transition: none !important; }
   .reveal{ opacity: 1 !important; transform: none !important; }
 }
+/* Badge'i tamamen kapat */
+.badge{ display:none !important; }
+/* Kart içeriğini biraz yukarı al */
+.card{
+  align-items: start;            /* ortalama yerine üstten hizala */
+  padding-top: 10px;             /* üst boşluk azalır */
+  padding-bottom: 16px;          /* altta daha fazla boşluk */
+}
+
+.card__icon{
+  margin-top: -2px;              /* ikon 1 tık yukarı */
+}
+
+.card__txt{
+  margin-top: -2px;              /* yazı 1 tık yukarı */
+}
