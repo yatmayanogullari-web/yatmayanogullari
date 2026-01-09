@@ -177,17 +177,18 @@ h1{
   text-decoration: none;
   color: #1b1410;
 
-  background: rgba(255, 248, 234, 0.22);
-  border: 1px solid rgba(255,255,255,0.18);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+background: rgba(255, 255, 255, 0.06);
+border: 1px solid rgba(255, 255, 255, 0.14);
+box-shadow: 0 10px 22px rgba(0,0,0,0.10);
 
-  backdrop-filter: blur(6px);
+backdrop-filter: blur(10px);
   transition: transform .22s ease, box-shadow .22s ease;
 }
 
 .card:hover{
   transform: translateY(-4px);
-  box-shadow: 0 16px 28px rgba(0,0,0,0.24);
+  box-shadow: 0 16px 28px rgba(0,0,0,0.14);
+  background: rgba(255, 255, 255, 0.09);
 }
 
 /* URL ikon görseli */
