@@ -65,7 +65,7 @@ body::after{
   inset:0;
 
   /* GÖRSEL BOYUT/POZİSYON */
-  background-image: url("assets/textures/parchment.png");
+  background: url("assets/textures/parchment.png") center / 135% auto no-repeat;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
