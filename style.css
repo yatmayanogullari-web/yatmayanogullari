@@ -176,8 +176,8 @@ footer{
 }
 /* ÜSTTEKİ YUVARLAK LOGO */
 .tugra{
-  width: clamp(100px, 12vw, 150px);
-  height: clamp(100px, 12vw, 150px);
+  width: clamp(150px, 12vw, 150px);
+  height: clamp(110px, 12vw, 150px);
 
   margin: 0 auto 18px;         /* ortala + altta boşluk */
   border-radius: 50%;
