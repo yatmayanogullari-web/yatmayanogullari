@@ -161,6 +161,10 @@ h1{
   align-items: center;
   gap: clamp(12px, 1.6vw, 16px);
 
+max-width: 720px;
+margin-left: auto;
+margin-right: auto;
+
   padding: clamp(14px, 1.9vw, 18px) clamp(14px, 2.1vw, 20px);
   margin: clamp(10px, 1.5vh, 14px) 0;
 
@@ -234,7 +238,7 @@ h1{
 
   /* Kartı mobilde biraz küçült ve limit koy */
   .card{
-    max-width: 520px;
+    max-width: 440px;
     padding: 12px 12px;
     gap: 10px;
     overflow: hidden;
@@ -274,7 +278,7 @@ h1{
   }
 
   .card{
-    max-width: 480px;
+    max-width: 360px;
     padding: 11px 11px;
     gap: 9px;
   }
