@@ -91,11 +91,12 @@ body{
   display: grid;
   place-items: center;
 
+  /* padding'i azalttık: parşömen daha çok uzasın */
   padding:
-    max(18px, env(safe-area-inset-top))
-    max(16px, env(safe-area-inset-right))
-    max(18px, env(safe-area-inset-bottom))
-    max(16px, env(safe-area-inset-left));
+    max(10px, env(safe-area-inset-top))
+    max(10px, env(safe-area-inset-right))
+    max(10px, env(safe-area-inset-bottom))
+    max(10px, env(safe-area-inset-left));
 
   overflow: auto;
   -webkit-overflow-scrolling: touch;
@@ -115,7 +116,7 @@ body{
 ========================= */
 .ferman{
   /* ekranı yukarı-aşağı doldursun */
-  height: 92dvh;
+  height: 96dvh;
   width: min(var(--max), 94vw);
   position: relative;
 
