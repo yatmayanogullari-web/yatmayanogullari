@@ -526,3 +526,12 @@ h1{
   *{ animation: none !important; transition: none !important; }
   .reveal{ opacity: 1 !important; transform: none !important; }
 }
+/* Kart yazılarını Osmanlı/hat hissi yapan font */
+.card h2{
+  font-family: "Aref Ruqaa Ink", "Amiri", Georgia, "Times New Roman", serif !important;
+  letter-spacing: 0.2px;
+}
+
+.card p{
+  font-family: "Amiri", "Aref Ruqaa Ink", Georgia, "Times New Roman", serif !important;
+}
