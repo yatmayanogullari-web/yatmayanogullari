@@ -429,3 +429,91 @@ h1{
   *{ animation: none !important; transition: none !important; }
   .reveal{ opacity: 1 !important; transform: none !important; }
 }
+/* ==========================================
+  TABLET + TELEFON FIX (<= 980px)
+  - Yazılar/kartlar sığar
+  - Her cihazda aynı oran (fix görünüm)
+  - Taşarsa sadece link alanı scroll
+========================================== */
+@media (max-width: 980px){
+  html, body { overflow: hidden; }
+
+  .viewport{
+    overflow: hidden !important;
+    padding:
+      max(10px, env(safe-area-inset-top))
+      max(10px, env(safe-area-inset-right))
+      max(10px, env(safe-area-inset-bottom))
+      max(10px, env(safe-area-inset-left)) !important;
+  }
+
+  .ferman{
+    width: min(92vw, 520px) !important;
+    aspect-ratio: 9 / 16 !important; /* FIX görünüm */
+    height: auto !important;
+    min-height: unset !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    padding: clamp(42px, 5vh, 56px) 16px clamp(56px, 7vh, 74px) !important;
+    border-radius: 18px !important;
+  }
+
+  .tugra{
+    width: clamp(104px, 18vw, 132px) !important;
+    height: clamp(104px, 18vw, 132px) !important;
+    margin: 0 auto 8px !important;
+  }
+
+  h1{
+    font-size: clamp(28px, 6.2vw, 40px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: 0.2px !important;
+  }
+
+  .subtitle{
+    font-size: clamp(12px, 2.6vw, 14px) !important;
+    margin-top: 6px !important;
+  }
+
+  .links{
+    width: calc(100% - 26px) !important;
+    margin: 12px auto 0 !important;
+
+    flex: 1 !important;
+    min-height: 0 !important;
+
+    overflow: auto !important;       /* kartlar burada kayar */
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    padding-right: 4px !important;
+  }
+
+  .card{ padding: 8px 6px !important; }
+
+  .card__icon{
+    width: clamp(42px, 9vw, 52px) !important;
+    height: clamp(42px, 9vw, 52px) !important;
+    border-radius: 14px !important;
+  }
+
+  .card__arrow{ font-size: 24px !important; }
+
+  .seal{
+    margin-top: auto !important;
+    padding-top: 10px !important;
+    padding-bottom: 6px !important;
+  }
+  .seal p{ font-size: 12px !important; }
+}
+
+@media (max-width: 420px){
+  .ferman{
+    width: 94vw !important;
+    padding: 40px 14px 66px !important;
+  }
+  h1{ font-size: 30px !important; }
+}
+
