@@ -355,70 +355,119 @@ h1{
 }
 
 /* =========================
-  MOBİL AYARLAR
+  MOBİL (ÇERÇEVE İÇİNE OTURTMA)
 ========================= */
 @media (max-width: 700px){
 
-  /* Mobilde içerik taşmasın: viewport scroll AÇIK */
+  /* mobilde sabit görünüm */
   .viewport{
-    position: fixed;
-    inset: 0;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden !important;
+    padding: 10px !important;
   }
 
-  /* Parşömen mobilde esnesin (dvh kilidi kalktı) */
+  /* Parşömen: aynı kalsın ama içerik çerçeve içine girsin */
   .ferman{
-    height: auto;
-    min-height: 96dvh;
-    width: 92vw;
+    width: min(94vw, 420px) !important;
+    aspect-ratio: 9 / 16 !important;
+    height: auto !important;
+    min-height: unset !important;
 
-    /* mobil padding net: yazılar + kartlar düzgün otursun */
-    padding: 54px 18px 86px;
+    /* >>> EN KRİTİK KISIM: sağ/sol padding arttı (çerçeveye sığar) */
+    padding: 56px 22px 86px !important;
 
-    border-radius: 18px;
+    border-radius: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
-  /* Tuğra ve başlıklar mobilde otursun */
+  /* Tuğra daha küçük + yukarı taşıma yok */
   .tugra{
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 8px;
+    width: 110px !important;
+    height: 110px !important;
+    margin: 0 auto 8px !important;
+  }
+
+  /* Başlık: taşma olmasın, satıra düşebilsin */
+  .mast{
+    padding-inline: 8px !important; /* çerçeveye sürtmesin */
   }
 
   h1{
-    font-size: 34px;
-    line-height: 1.05;
+    font-size: 30px !important;     /* taşmayı bitirir */
+    line-height: 1.02 !important;
+    letter-spacing: 0.2px !important;
+    word-break: normal !important;
+    overflow-wrap: anywhere !important; /* dar ekranda kırılabilsin */
   }
 
   .subtitle{
-    font-size: 13px;
-    margin-top: 6px;
+    font-size: 12px !important;
+    margin-top: 6px !important;
+    line-height: 1.2 !important;
   }
 
-  /* Kart alanı: çerçevenin içine, mobilde scroll burada */
+  /* Kart alanı: çerçevenin içine otursun */
   .links{
-    width: calc(100% - 32px);
-    max-width: 520px;
-    margin: 14px auto 0;
+    width: calc(100% - 44px) !important; /* >>> çerçeve içi */
+    max-width: none !important;
+    margin: 12px auto 0 !important;
 
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    flex: 1 !important;
+    min-height: 0 !important;
 
-    padding-bottom: 10px;
+    overflow: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+
+    padding: 0 2px 8px !important;
   }
 
-  .card__icon{ width: 46px; height: 46px; border-radius: 14px; }
-  .card__arrow{ font-size: 26px; }
+  /* Kart: daha kompakt + sağ taşmayı engelle */
+  .card{
+    padding: 8px 4px !important;
+    grid-template-columns: auto 1fr !important; /* ok için kolon yok */
+    align-items: start !important;
+    gap: 10px !important;
+  }
 
-  /* Footer en alta yaslansın */
+  .card__icon{
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 12px !important;
+  }
+
+  .card h2{
+    font-size: 18px !important;
+    line-height: 1.1 !important;
+  }
+
+  .card p{
+    font-size: 13px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Mobilde ok kapalı (sağa taşmayı keser) */
+  .card__arrow{
+    display: none !important;
+  }
+
+  /* Footer en altta, çerçeveye taşmasın */
   .seal{
-    margin-top: auto;
-    padding-top: 10px;
-    padding-bottom: 6px;
+    margin-top: auto !important;
+    padding-top: 10px !important;
+    padding-bottom: 6px !important;
+  }
+
+  .seal p{
+    font-size: 12px !important;
   }
 }
 
+/* çok dar cihaz */
+@media (max-width: 380px){
+  .ferman{ padding: 52px 20px 84px !important; }
+  h1{ font-size: 28px !important; }
+}
 
 @media (max-width: 420px){
   .ferman{ width: 96vw; }
