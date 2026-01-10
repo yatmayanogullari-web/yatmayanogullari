@@ -358,22 +358,67 @@ h1{
   MOBİL AYARLAR
 ========================= */
 @media (max-width: 700px){
+
+  /* Mobilde içerik taşmasın: viewport scroll AÇIK */
+  .viewport{
+    position: fixed;
+    inset: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Parşömen mobilde esnesin (dvh kilidi kalktı) */
   .ferman{
-    height: 98dvh;
-    width: 95vw;
-    padding: clamp(56px, 7vh, 88px) var(--padX) clamp(98px, 10vh, 140px);
-    border-radius: 20px;
+    height: auto;
+    min-height: 96dvh;
+    width: 92vw;
+
+    /* mobil padding net: yazılar + kartlar düzgün otursun */
+    padding: 54px 18px 86px;
+
+    border-radius: 18px;
   }
 
+  /* Tuğra ve başlıklar mobilde otursun */
+  .tugra{
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 8px;
+  }
+
+  h1{
+    font-size: 34px;
+    line-height: 1.05;
+  }
+
+  .subtitle{
+    font-size: 13px;
+    margin-top: 6px;
+  }
+
+  /* Kart alanı: çerçevenin içine, mobilde scroll burada */
   .links{
-    width: calc(100% - 34px);
-    max-width: 640px;
-    margin-top: 14px;
+    width: calc(100% - 32px);
+    max-width: 520px;
+    margin: 14px auto 0;
+
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    padding-bottom: 10px;
   }
 
-  .card__icon{ width: 48px; height: 48px; border-radius: 14px; }
+  .card__icon{ width: 46px; height: 46px; border-radius: 14px; }
   .card__arrow{ font-size: 26px; }
+
+  /* Footer en alta yaslansın */
+  .seal{
+    margin-top: auto;
+    padding-top: 10px;
+    padding-bottom: 6px;
+  }
 }
+
 
 @media (max-width: 420px){
   .ferman{ width: 96vw; }
