@@ -489,7 +489,8 @@ h1{
 .seal{
   margin-top: auto !important;
   padding-top: 10px !important;
-  padding-bottom: 16px !important; /* yazıyı aşağı iter */
+  padding-bottom: 0 !important;
+  transform: translateY(10px) !important; /* yazıyı fiziksel olarak aşağı iter */
   }
   .seal__line{ display:none !important; }
   .seal p{ font-size: 12px !important; }
