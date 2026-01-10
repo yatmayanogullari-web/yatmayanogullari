@@ -22,7 +22,7 @@ body{
   background: var(--bg);
   color: var(--ink);
   font-family: Georgia, "Times New Roman", serif;
-  overflow: hidden; /* sayfa kaymasın; içerik içeride scroll olacak */
+  overflow: hidden;
 }
 
 /* =========================
@@ -35,7 +35,6 @@ body{
   place-items: center;
 }
 
-/* duvar */
 .scene::before{
   content:"";
   position:absolute;
@@ -46,7 +45,6 @@ body{
   z-index: 0;
 }
 
-/* karartma + vinyet (hafifletildi) */
 .scene__overlay{
   position:absolute;
   inset:0;
@@ -56,7 +54,6 @@ body{
   z-index: 1;
 }
 
-/* toz/ışık parçacıkları */
 .scene__dust{
   position:absolute;
   inset:-20%;
@@ -79,7 +76,7 @@ body{
 }
 
 /* =========================
-  İÇERİK VIEWPORT (SCROLL BURADA)
+  İÇERİK VIEWPORT
 ========================= */
 .viewport{
   position: relative;
@@ -102,7 +99,6 @@ body{
   overscroll-behavior: contain;
 }
 
-/* scroll bar (PC) */
 .viewport::-webkit-scrollbar{ width: 10px; }
 .viewport::-webkit-scrollbar-thumb{
   background: rgba(255,255,255,0.14);
@@ -114,7 +110,7 @@ body{
   FERMAN
 ========================= */
 .ferman{
-  height: 98dvh; /* daha uzun */
+  height: 98dvh;
   width: min(var(--max), 94vw);
   position: relative;
 
@@ -126,7 +122,6 @@ body{
   display: flex;
   flex-direction: column;
 
-  /* ruloların içine yazı girmesin */
   padding: clamp(64px, 7vh, 92px) var(--padX) clamp(92px, 9vh, 128px);
 
   animation: fermanIn 680ms cubic-bezier(.2,.85,.2,1) both;
@@ -137,7 +132,6 @@ body{
   to   { transform: translateY(0) scale(1); opacity: 1; }
 }
 
-/* parşömen üstünde hafif parlama */
 .ferman__shine{
   position:absolute;
   inset: 0;
@@ -203,7 +197,6 @@ body{
   50%     { transform: translate3d(2%, -2%, 0); opacity: .75; }
 }
 
-/* TUĞRA İÇİ KIRPILMASIN */
 .tugra img{
   width: 100%;
   height: 100%;
@@ -226,20 +219,20 @@ h1{
 }
 
 /* =========================
-  LINK KARTLARI (ORTALI + PARŞÖMENE SIĞAN)
+  LINK ALANI (ÇERÇEVE İÇİNE OTURUR)
 ========================= */
 .links{
   flex: 1;
   min-height: 0;
 
   display: grid;
-  gap: 12px;
+  gap: 14px;
 
-  width: 100%;
-  max-width: 720px;
-  margin: 10px auto 0;
-  padding: 6px 4px;
+  width: calc(100% - 64px);
+  max-width: 620px;
+  margin: 18px auto 0;
 
+  padding: 0;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 
@@ -253,42 +246,36 @@ h1{
 }
 .links::-webkit-scrollbar-track{ background: rgba(0,0,0,0.08); }
 
-/* KART: SAYDAM, PANEL GİBİ DEĞİL */
+/* =========================
+  KART (SAYDAM PANEL YOK)
+========================= */
 .card{
   display: grid;
   grid-template-columns: auto 1fr auto;
-  align-items: center;
+  align-items: start;
   gap: 12px;
 
   text-decoration: none;
   color: var(--ink);
 
-  padding: 14px 14px;
-  border-radius: 16px;
-
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(74,45,18,0.14);
-
+  background: transparent;
+  border: 0;
+  box-shadow: none;
   backdrop-filter: none;
-  box-shadow: 0 10px 18px rgba(0,0,0,0.10);
 
-  transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-  position: relative;
-  overflow: hidden;
+  padding: 10px 8px;
+  border-radius: 12px;
 
-  max-width: 640px;
   width: 100%;
-  margin-inline: auto;
+  max-width: 100%;
+  margin: 0;
+
+  transition: transform .18s ease, background .18s ease;
 }
 
-/* parlama şeridi kapalı (panel hissi yapmasın) */
-.card::before{ content: none; }
-
 .card:hover{
-  transform: translateY(-2px);
-  background: rgba(255,255,255,0.18);
-  border-color: rgba(181,138,43,0.22);
-  box-shadow: 0 14px 24px rgba(0,0,0,0.14);
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.10);
 }
 
 .card__icon{
@@ -302,6 +289,7 @@ h1{
   background: rgba(0,0,0,0.06);
   border: 1px solid rgba(0,0,0,0.12);
 }
+
 .card__icon img{
   width: 88%;
   height: 88%;
@@ -334,33 +322,18 @@ h1{
   overflow-wrap: anywhere;
 }
 
-/* BADGE: KART DIŞINA TAŞMAZ */
-.badge{
-  margin-left: auto;
-
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-
-  max-width: 90px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  color: #2a1f14;
-  background: rgba(225,193,110,0.65);
-  border: 1px solid rgba(0,0,0,0.12);
-}
+/* Badge kapalı */
+.badge{ display:none !important; }
 
 .card__arrow{
   font-size: 28px;
   line-height: 1;
-  opacity: .45;
+  opacity: .35;
   transform: translateY(-1px);
 }
 
 /* =========================
-  FOOTER / MÜHÜR (ARka plan yok)
+  FOOTER / MÜHÜR
 ========================= */
 .seal{
   margin-top: 14px;
@@ -405,39 +378,26 @@ h1{
   .ferman{
     height: 98dvh;
     width: 95vw;
-
     padding: clamp(56px, 7vh, 88px) var(--padX) clamp(98px, 10vh, 140px);
     border-radius: 20px;
+  }
+
+  .links{
+    width: calc(100% - 34px);
+    max-width: 640px;
+    margin-top: 14px;
   }
 
   .card__icon{ width: 48px; height: 48px; border-radius: 14px; }
   .card__arrow{ font-size: 26px; }
 }
 
-/* küçük telefon */
 @media (max-width: 420px){
   .ferman{ width: 96vw; }
   .subtitle{ opacity: .88; }
 }
 
-/* motion hassasiyeti */
 @media (prefers-reduced-motion: reduce){
   *{ animation: none !important; transition: none !important; }
   .reveal{ opacity: 1 !important; transform: none !important; }
-}
-/* Badge'i tamamen kapat */
-.badge{ display:none !important; }
-/* Kart içeriğini biraz yukarı al */
-.card{
-  align-items: start;            /* ortalama yerine üstten hizala */
-  padding-top: 10px;             /* üst boşluk azalır */
-  padding-bottom: 16px;          /* altta daha fazla boşluk */
-}
-
-.card__icon{
-  margin-top: -2px;              /* ikon 1 tık yukarı */
-}
-
-.card__txt{
-  margin-top: -2px;              /* yazı 1 tık yukarı */
 }
