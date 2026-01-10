@@ -494,7 +494,7 @@ h1{
 /* Çok dar telefonlar (360px ve altı) */
 @media (max-width: 380px){
   :root{
-    --frameX: 46px;   /* daha dar ekranda daha da içeri */
+    --frameX: 52px;   /* daha dar ekranda daha da içeri */
     --frameTop: 70px;
     --frameBot: 96px;
   }
