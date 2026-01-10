@@ -486,10 +486,10 @@ h1{
   .badge{ display:none !important; }
 
   /* FOOTER */
-  .seal{
-    margin-top: auto !important;
-    padding-top: 10px !important;
-    padding-bottom: 0 !important;
+.seal{
+  margin-top: auto !important;
+  padding-top: 10px !important;
+  padding-bottom: 8px !important; /* yazıyı aşağı iter */
   }
   .seal__line{ display:none !important; }
   .seal p{ font-size: 12px !important; }
