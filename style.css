@@ -366,7 +366,7 @@ h1{
     /* İç çerçevenin güvenli alanı */
     --frameX: 56px;     /* sağ-sol: bunu artırırsan daha içeri girer */
     --frameTop: 72px;   /* üst: azaltırsan içerik yukarı çıkar */
-    --frameBot: 100px;  /* alt: azaltırsan kartlara alan açılır */
+    --frameBot: 56px;  /* alt: azaltırsan kartlara alan açılır */
   }
 
   html, body{ overflow: hidden; }
@@ -490,7 +490,7 @@ h1{
   margin-top: auto !important;
   padding-top: 10px !important;
   padding-bottom: 0 !important;
-  transform: translateY(10px) !important; /* yazıyı fiziksel olarak aşağı iter */
+  transform: translateY(16px) !important; /* yazıyı fiziksel olarak aşağı iter */
   }
   .seal__line{ display:none !important; }
   .seal p{ font-size: 12px !important; }
