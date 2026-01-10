@@ -365,8 +365,8 @@ h1{
 
   /* iç çerçevenin “güvenli alanı” (sağ/sol/üst/alt) */
   :root{
-    --frameX: 34px;  /* çerçeve içi sağ-sol boşluk */
-    --frameTop: 78px;/* çerçeve içi üst boşluk */
+    --frameX: 38px;  /* çerçeve içi sağ-sol boşluk */
+    --frameTop: 72px;/* çerçeve içi üst boşluk */
     --frameBot: 96px;/* çerçeve içi alt boşluk */
   }
 
