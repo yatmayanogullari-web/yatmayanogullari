@@ -358,25 +358,22 @@ h1{
   MOBİL (ÇERÇEVE İÇİNE OTURTMA)
 ========================= */
 /* ==========================================
-  TABLET + TELEFON: İÇ ÇERÇEVEYE OTURTMA
-  (yazılar + kartlar çerçevenin içine sığar, simetrik durur)
+  TABLET + TELEFON: İÇ ÇERÇEVEYE TAM OTURTMA
+  - Başlık/subtitle/kart/ikon hiçbir cihazda çizgilerin dışına taşmaz
 ========================================== */
 @media (max-width: 980px){
 
-  /* iç çerçevenin “güvenli alanı” (sağ/sol/üst/alt) */
   :root{
-    --frameX: 38px;  /* çerçeve içi sağ-sol boşluk */
-    --frameTop: 72px;/* çerçeve içi üst boşluk */
-    --frameBot: 96px;/* çerçeve içi alt boşluk */
+    --frameX: 44px;     /* sağ-sol güvenli alan (taşmayı bitirir) */
+    --frameTop: 72px;   /* üst boşluk */
+    --frameBot: 98px;   /* alt boşluk */
   }
 
-  /* sayfa sabit, içerik parşömen içinde */
   .viewport{
     overflow: hidden !important;
     padding: 10px !important;
   }
 
-  /* parşömen oran sabit, içerik çerçeve içine */
   .ferman{
     width: min(92vw, 520px) !important;
     aspect-ratio: 9 / 16 !important;
@@ -386,44 +383,47 @@ h1{
     display: flex !important;
     flex-direction: column !important;
 
-    /* >>> ÇERÇEVEYE OTURTAN ASIL AYAR */
     padding: var(--frameTop) var(--frameX) var(--frameBot) !important;
-
     border-radius: 18px !important;
   }
 
-  /* tuğra biraz küçülür (taşma yapmaz) */
-  .tugra{
-    width: clamp(104px, 18vw, 132px) !important;
-    height: clamp(104px, 18vw, 132px) !important;
-    margin: 0 auto 10px !important;
-  }
-
-  /* başlık/subtitle çerçeve içine sığsın */
+  /* Başlık bloğu */
   .mast{
     margin-bottom: 12px !important;
-    padding-inline: 0 !important;
+  }
+
+  .tugra{
+    width: clamp(98px, 18vw, 124px) !important;
+    height: clamp(98px, 18vw, 124px) !important;
+    margin: 0 auto 8px !important;
   }
 
   h1{
-    font-size: clamp(26px, 6.6vw, 36px) !important;
+    font-size: clamp(24px, 6.4vw, 34px) !important;
     line-height: 1.02 !important;
-    letter-spacing: 0.15px !important;
+    letter-spacing: 0.1px !important;
     text-align: center !important;
-    overflow-wrap: anywhere !important; /* dar yerde taşma olmasın */
+
+    /* taşmayı bitiren ayarlar */
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+    word-break: normal !important;
   }
 
   .subtitle{
-    font-size: clamp(12px, 2.6vw, 14px) !important;
+    font-size: clamp(11px, 2.6vw, 13px) !important;
     line-height: 1.2 !important;
     margin-top: 6px !important;
     text-align: center !important;
+
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
   }
 
-  /* kart alanı: çerçevenin TAM içine, simetrik */
+  /* Kart alanı */
   .links{
-    width: 100% !important;          /* padding zaten ferman’da */
-    margin: 0 auto !important;
+    width: 100% !important;
+    margin: 0 !important;
 
     flex: 1 !important;
     min-height: 0 !important;
@@ -431,62 +431,79 @@ h1{
     display: grid !important;
     gap: 12px !important;
 
-    overflow: auto !important;        /* kartlar artarsa burada kayar */
+    overflow: auto !important;        /* çok kart olursa burada kayar */
     overflow-x: hidden !important;
     -webkit-overflow-scrolling: touch !important;
 
-    padding: 0 2px 6px !important;
+    padding: 0 0 6px !important;
   }
 
-  /* kart: sağa sola taşma olmasın, daha kompakt */
+  /* Kart: taşma sıfır */
   .card{
-    grid-template-columns: 44px 1fr !important; /* ok yok */
-    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+
+    display: grid !important;
+    grid-template-columns: 40px 1fr !important; /* ikon + yazı */
     gap: 10px !important;
+
     padding: 8px 6px !important;
-    border-radius: 12px !important;
+    align-items: start !important;
+
+    overflow: hidden !important; /* hiçbir şey dışarı çıkamaz */
   }
 
   .card__icon{
-    width: 44px !important;
-    height: 44px !important;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 12px !important;
   }
 
-  .card__arrow{ display: none !important; } /* taşma yapmasın */
-  .badge{ display:none !important; }
+  .card__txt{
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
 
   .card h2{
-    font-size: 18px !important;
+    font-size: 16px !important;
     line-height: 1.1 !important;
-  }
-  .card p{
-    font-size: 13px !important;
-    line-height: 1.25 !important;
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
   }
 
-  /* footer: çerçeve içinde ve altta */
+  .card p{
+    font-size: 12px !important;
+    line-height: 1.25 !important;
+    max-width: 100% !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .card__arrow{ display: none !important; }
+  .badge{ display:none !important; }
+
+  /* Footer */
   .seal{
     margin-top: auto !important;
-    padding-top: 12px !important;
+    padding-top: 10px !important;
     padding-bottom: 0 !important;
-    text-align: center !important;
   }
-  .seal__line{ display:none !important; } /* çerçeve ile çakışmasın */
-  .seal p{
-    font-size: 12px !important;
-  }
+  .seal__line{ display:none !important; }
+  .seal p{ font-size: 12px !important; }
 }
 
-/* çok dar telefon */
+/* Çok dar telefonlar (360px ve altı) */
 @media (max-width: 380px){
   :root{
-    --frameX: 30px;
-    --frameTop: 74px;
-    --frameBot: 92px;
+    --frameX: 46px;   /* daha dar ekranda daha da içeri */
+    --frameTop: 70px;
+    --frameBot: 96px;
   }
-  h1{ font-size: 28px !important; }
+  h1{ font-size: 23px !important; }
+  .subtitle{ font-size: 11px !important; }
+  .card{ grid-template-columns: 38px 1fr !important; }
+  .card__icon{ width: 38px !important; height: 38px !important; }
 }
+
 
 
 @media (max-width: 420px){
